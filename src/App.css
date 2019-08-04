@@ -1,3 +1,14 @@
 .Header {
+  margin: 1rem 0 3rem;
+  text-align: center;
+}
+
+.Calendar {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.Expenses {
+  font-size: 1.5rem;
   text-align: center;
 }
