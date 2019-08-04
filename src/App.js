@@ -1,11 +1,10 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Cost Calculator</h1>
+    <div className="container">
+      <h1 className="Header">Cost Calculator</h1>
     </div>
   );
 }
