@@ -1,6 +1,7 @@
 import React from "react";
 // import PropTypes from "prop-types";
 import styled from "styled-components";
+import { Store } from "../../Store";
 
 const Rate = styled.div`
   display: flex;
@@ -23,10 +24,28 @@ const WeekDay = styled.div`
 `;
 
 const Month = props => {
+  const { state, dispatch } = React.useContext(Store);
+  const [inputText, setInputState] = React.useState("");
+
+  console.log(state);
+
+  // React.useEffect(() => {
+  //   state.hourlyRate === 0 && inputOnChange();
+  // });
+
+  const inputOnChange = e => {
+    setInputState(e.target.value);
+
+    return dispatch({
+      type: "SET_HOURLY_RATE",
+      payload: e.target.value
+    });
+  };
+
   return (
     <div>
       <Rate>
-        $<input type="text" />/ hour
+        $<input type="text" onChange={inputOnChange} value={inputText} />/ hour
       </Rate>
       <Week>
         <WeekDay>
