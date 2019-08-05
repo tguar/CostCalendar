@@ -30,7 +30,7 @@ const Month = props => {
   const inputOnChange = e => {
     return dispatch({
       type: "SET_HOURLY_RATE",
-      payload: parseFloat(e.target.value)
+      payload: e.target.value
     });
   };
 
@@ -38,12 +38,8 @@ const Month = props => {
     <div>
       <Rate>
         $
-        <input
-          type="text"
-          onChange={inputOnChange}
-          value={state.hourlyRate || ""}
-        />
-        / hour
+        <input type="text" onChange={inputOnChange} value={state.hourlyRate} />/
+        hour
       </Rate>
       <Week>
         <WeekDay>

@@ -3,7 +3,7 @@ import React from "react";
 export const Store = React.createContext();
 
 const initialState = {
-  hourlyRate: 0,
+  hourlyRate: "",
   expenses: []
 };
 
