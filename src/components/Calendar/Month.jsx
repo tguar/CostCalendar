@@ -15,6 +15,11 @@ const Week = styled.div`
 const WeekDay = styled.div`
   flex: 1;
   text-align: center;
+
+  abbr {
+    cursor: default;
+    text-decoration: none;
+  }
 `;
 
 const Month = props => {
