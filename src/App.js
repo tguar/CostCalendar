@@ -1,5 +1,6 @@
-import React from "react";
-import "./App.css";
+import React, { useState } from 'react';
+import './App.css';
+import List from './Components/List.jsx';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         </div>
         <div className="col-sm-4">
           <h2 className="Expenses">Expenses</h2>
+          <List/>
         </div>
       </div>
     </div>
