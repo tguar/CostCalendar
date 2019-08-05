@@ -3,7 +3,8 @@ import React from "react";
 export const Store = React.createContext();
 
 const initialState = {
-  hourlyRate: 0
+  hourlyRate: 0,
+  expenses: []
 };
 
 function reducer(state, action) {
