@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
+import InputCurrency from 'react-input-currency';
 import { Store } from '../../Store';
 
 const Rate = styled.div`
@@ -22,7 +23,7 @@ const WeekDay = styled.div`
   }
 `;
 
-const Month = props => {
+const Month = () => {
   const { state, dispatch } = React.useContext(Store);
 
   console.log(state);
@@ -30,7 +31,7 @@ const Month = props => {
   const inputOnChange = e =>
     dispatch({
       type: 'SET_HOURLY_RATE',
-      payload: e.target.value
+      payload: e
     });
 
   return (
@@ -40,13 +41,10 @@ const Month = props => {
           <div className="input-group-prepend">
             <span className="input-group-text">$</span>
           </div>
-          <input
-            type="text"
+          <InputCurrency
+            value={state.hourlyRate}
+            onChange={({ value }) => inputOnChange(value)}
             className="form-control"
-            data-type="currency"
-            aria-label="Hourly rate"
-            placeholder="0.00"
-            onBlur={inputOnChange}
           />
           <div className="input-group-append">
             <span className="input-group-text">per hour</span>
