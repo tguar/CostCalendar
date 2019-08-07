@@ -7,6 +7,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-input-currency": "^1.0.10",
     "react-scripts": "3.0.1",
     "react-shapes": "^0.1.0",
     "styled-components": "^4.3.2"
@@ -19,7 +20,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
+      "airbnb",
       "plugin:prettier/recommended"
     ],
     "plugins": [
@@ -27,7 +28,13 @@
     ],
     "rules": {
       "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn"
+      "react-hooks/exhaustive-deps": "warn",
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": true
+        }
+      ]
     }
   },
   "browserslist": {
@@ -43,8 +50,12 @@
     ]
   },
   "devDependencies": {
+    "eslint-config-airbnb": "17.1.1",
     "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.2",
     "prettier": "^1.18.2"
   }
 }
