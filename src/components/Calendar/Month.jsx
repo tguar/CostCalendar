@@ -26,7 +26,7 @@ const WeekDay = styled.div`
 const Month = () => {
   const { state, dispatch } = React.useContext(Store);
 
-  console.log(state);
+  // console.log(state);
 
   const inputOnChange = e =>
     dispatch({

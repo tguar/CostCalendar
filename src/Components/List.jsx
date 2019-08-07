@@ -148,36 +148,32 @@ function List() {
   return (
     <form className="expense-list">
       <ul>
-        {expenses.map(
-          (expense, i) => (
-            console.log(expense),
-            (
-              <div key={i} id={i} className="expense">
-                <Rectangle
-                  width={40}
-                  height={20}
-                  fill={{ color: expense.expenseColor }}
-                />
-                <input
-                  type="text"
-                  placeholder="test"
-                  value={expense.expenseName}
-                  onKeyDown={e => handleKeyDownForExpenseName(e, i)}
-                  onChange={e => updateExpenseNameAtIndex(e, i)}
-                />
-                <input
-                  type="number"
-                  step=".01"
-                  min=".01"
-                  max="10000"
-                  value={expense.expenseAmount}
-                  onKeyDown={e => handleKeyDownForExpenseAmount(e, i)}
-                  onChange={e => updateExpenseAmountAtIndex(e, i)}
-                />
-              </div>
-            )
-          )
-        )}
+        {expenses.map((expense, i) => (
+          // console.log(expense),
+          <div key={i} id={i} className="expense">
+            <Rectangle
+              width={40}
+              height={20}
+              fill={{ color: expense.expenseColor }}
+            />
+            <input
+              type="text"
+              placeholder="test"
+              value={expense.expenseName}
+              onKeyDown={e => handleKeyDownForExpenseName(e, i)}
+              onChange={e => updateExpenseNameAtIndex(e, i)}
+            />
+            <input
+              type="number"
+              step=".01"
+              min=".01"
+              max="10000"
+              value={expense.expenseAmount}
+              onKeyDown={e => handleKeyDownForExpenseAmount(e, i)}
+              onChange={e => updateExpenseAmountAtIndex(e, i)}
+            />
+          </div>
+        ))}
       </ul>
     </form>
   );
