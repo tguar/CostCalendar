@@ -1,6 +1,8 @@
-import React from "react";
-import Calendar from "./components/Calendar";
-import "./App.css";
+import React, { useState } from 'react';
+import './App.css';
+import Calendar from "./Components/Calendar";
+import List from './Components/List';
+
 
 function App() {
   return (
@@ -13,6 +15,7 @@ function App() {
         </div>
         <div className="col-sm-4">
           <h2 className="Expenses">Expenses</h2>
+          <List/>
         </div>
       </div>
     </div>
