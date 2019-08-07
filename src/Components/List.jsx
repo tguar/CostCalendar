@@ -87,23 +87,23 @@ function List() {
   
     return (
 
-        <form className="expense-list">
+        <form className='expense-list'>
           <ul>
             {expenses.map((expense, i) => (
-              <div key={i} id={i} className="expense">        
+              <div key={i} id={i} className='expense'>        
                 <Rectangle width={40} height={20} fill={{color: colorArray[i]}}/>
                 <input
-                  type="text"
-                  placeholder="test"
+                  type='text'
+                  placeholder='test'
                   value={expense.expenseName}
                   onKeyDown={e => handleKeyDownForExpenseName(e, i)}
                   onChange={e => updateExpenseNameAtIndex(e, i)}
                 />
                 <input
-                  type="number"
-                  step=".01"
-                  min=".01"
-                  max="10000"
+                  type='number'
+                  step='.01'
+                  min='.01'
+                  max='10000'
                   value={expense.expenseAmount}
                   onKeyDown={e => handleKeyDownForExpenseAmount(e, i)}
                   onChange={e => updateExpenseAmountAtIndex(e, i)}

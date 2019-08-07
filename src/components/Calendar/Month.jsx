@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { Store } from "../../Store";
+import React from 'react';
+import styled from 'styled-components';
+import { Store } from '../../Store';
 
 const Rate = styled.div`
   display: flex;
@@ -29,7 +29,7 @@ const Month = props => {
 
   const inputOnChange = e => {
     return dispatch({
-      type: "SET_HOURLY_RATE",
+      type: 'SET_HOURLY_RATE',
       payload: e.target.value
     });
   };
@@ -38,42 +38,42 @@ const Month = props => {
     <div>
       <Rate>
         $
-        <input type="text" onChange={inputOnChange} value={state.hourlyRate} />/
+        <input type='text' onChange={inputOnChange} value={state.hourlyRate} />/
         hour
       </Rate>
       <Week>
         <WeekDay>
-          <abbr title="Sunday" aria-label="Sunday">
+          <abbr title='Sunday' aria-label='Sunday'>
             Sun
           </abbr>
         </WeekDay>
         <WeekDay>
-          <abbr title="Monday" aria-label="Monday">
+          <abbr title='Monday' aria-label='Monday'>
             Mon
           </abbr>
         </WeekDay>
         <WeekDay>
-          <abbr title="Tuesday" aria-label="Tuesday">
+          <abbr title='Tuesday' aria-label='Tuesday'>
             Tue
           </abbr>
         </WeekDay>
         <WeekDay>
-          <abbr title="Wednesday" aria-label="Wednesday">
+          <abbr title='Wednesday' aria-label='Wednesday'>
             Wed
           </abbr>
         </WeekDay>
         <WeekDay>
-          <abbr title="Thursday" aria-label="Thursday">
+          <abbr title='Thursday' aria-label='Thursday'>
             Thu
           </abbr>
         </WeekDay>
         <WeekDay>
-          <abbr title="Friday" aria-label="Friday">
+          <abbr title='Friday' aria-label='Friday'>
             Fri
           </abbr>
         </WeekDay>
         <WeekDay>
-          <abbr title="Saturday" aria-label="Saturday">
+          <abbr title='Saturday' aria-label='Saturday'>
             Sat
           </abbr>
         </WeekDay>
