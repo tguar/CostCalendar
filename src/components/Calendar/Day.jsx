@@ -6,7 +6,7 @@ const DayWrapper = styled.div`
   align-items: center;
   display: flex;
   flex: 0 0 calc(100% / 7);
-  height: 50px;
+  height: 75px;
   justify-content: center;
 `;
 

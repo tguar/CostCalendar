@@ -6,6 +6,7 @@ import Days from './Days';
 
 const Wrapper = styled.div`
   border: 1px solid #000000;
+  margin-bottom: 3rem;
 `;
 
 const Calendar = () => {
