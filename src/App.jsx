@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import "./App.css";
-import Calendar from "./Components/Calendar";
-import List from "./Components/List";
+import React from 'react';
+import './App.css';
+import Calendar from './Components/Calendar';
+import List from './Components/List';
 
 function App() {
   return (

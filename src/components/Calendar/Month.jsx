@@ -1,6 +1,6 @@
-import React, { Fragment } from "react";
-import styled from "styled-components";
-import { Store } from "../../Store";
+import React, { Fragment } from 'react';
+import styled from 'styled-components';
+import { Store } from '../../Store';
 
 const Rate = styled.div`
   display: flex;
@@ -27,12 +27,11 @@ const Month = props => {
 
   console.log(state);
 
-  const inputOnChange = e => {
-    return dispatch({
-      type: "SET_HOURLY_RATE",
+  const inputOnChange = e =>
+    dispatch({
+      type: 'SET_HOURLY_RATE',
       payload: e.target.value
     });
-  };
 
   return (
     <Fragment>
