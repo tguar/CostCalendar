@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-import Calendar from "./components/Calendar";
-import List from './Components/List.jsx';
+import Calendar from "./Components/Calendar";
+import List from './Components/List';
 
 
 function App() {
