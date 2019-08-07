@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   border: 1px solid #000000;
 `;
 
-const Calendar = props => {
+const Calendar = () => {
   return (
     <Wrapper>
       <Month />
