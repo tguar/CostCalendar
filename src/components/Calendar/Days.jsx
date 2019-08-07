@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import Day from "./Day";
+import React from 'react';
+import styled from 'styled-components';
+import Day from './Day';
 
 const DaysWrapper = styled.div`
   display: flex;
