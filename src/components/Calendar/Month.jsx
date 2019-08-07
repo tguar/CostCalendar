@@ -38,9 +38,6 @@ const Month = () => {
     <Fragment>
       <Rate>
         <div className="input-group">
-          <div className="input-group-prepend">
-            <span className="input-group-text">$</span>
-          </div>
           <InputCurrency
             value={state.hourlyRate}
             onChange={({ value }) => inputOnChange(value)}
