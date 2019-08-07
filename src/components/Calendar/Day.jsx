@@ -10,20 +10,31 @@ const DayWrapper = styled.div`
   justify-content: center;
 `;
 
-const Number = styled.span`
+const Number = styled.div`
   align-items: center;
   border: 1px solid #000000;
   display: flex;
   height: 80%;
   justify-content: center;
+  position: relative;
   width: 80%;
+
+  &:after {
+    align-items: center;
+    content: "${({ dayNumber }) => dayNumber}";
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+  }
 `;
 
 const Day = props => {
   const { dayNumber } = props;
   return (
     <DayWrapper>
-      <Number>{dayNumber}</Number>
+      <Number dayNumber={dayNumber} />
     </DayWrapper>
   );
 };
