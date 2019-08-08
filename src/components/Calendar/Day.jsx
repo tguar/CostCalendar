@@ -11,11 +11,10 @@ const DayWrapper = styled.div`
 `;
 
 const Number = styled.div`
-  align-items: center;
   border: 1px solid #000000;
   display: flex;
+  flex-direction: column-reverse;
   height: 80%;
-  justify-content: center;
   position: relative;
   width: 80%;
 
@@ -30,11 +29,22 @@ const Number = styled.div`
   }
 `;
 
+const Progress = styled.div`
+  width: 100%;
+  background-color: ${({ color }) => color};
+  height: ${({ height }) => `${Math.ceil(height)}%`};
+`;
+
 const Day = props => {
-  const { dayNumber } = props;
+  const { dayNumber, fill } = props;
+  const keys = fill ? Object.keys(fill) : [];
   return (
     <DayWrapper>
-      <Number dayNumber={dayNumber} />
+      <Number dayNumber={dayNumber}>
+        {keys.map((key, index) => (
+          <Progress key={`.0${index}`} color={key} height={fill[key]} />
+        ))}
+      </Number>
     </DayWrapper>
   );
 };
