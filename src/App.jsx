@@ -6,7 +6,7 @@ import List from './Components/List';
 function App() {
   return (
     <div className="container">
-      <h1 className="Header">Cost Calculator</h1>
+      <h1 className="Header">Cost Calendar</h1>
       <div className="row">
         <div className="col-sm-8">
           <h2 className="Calendar">Cost in Days of Work</h2>
