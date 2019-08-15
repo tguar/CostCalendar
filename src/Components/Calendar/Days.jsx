@@ -10,7 +10,31 @@ const DaysWrapper = styled.div`
 
 const daysOfTheMonth = [];
 
-for (let i = 1; i <= 31; i++) {
+const getCurrentMonthNumber = () => {
+  return new Date().getMonth();
+}
+
+const getCurrentYear = () => {
+  return new Date().getFullYear();
+}
+
+const getStartingDayNumber = () => {
+  return new Date(getCurrentYear(), getCurrentMonthNumber() + 2, 1).getDay();
+}
+
+const daysInMonth = (year, month) => {
+  return new Date(year, month, 0).getDate();
+}
+
+const calculateDecimalPointToString = (val) => {
+  if(val < 10)
+  {
+    return `.0${val}`;
+  }
+  return `.${val}`;
+}
+
+for (let i = 1; i <= daysInMonth(getCurrentMonthNumber(), getCurrentYear()); i++) {
   daysOfTheMonth.push({ number: i });
 }
 
@@ -63,8 +87,8 @@ const Days = () => {
   index = 0;
   daysOfTheMonth.forEach(day => {
     if (
-      day.number % 7 === 0 ||
-      (day.number - 1) % 7 === 0 ||
+      (day.number + getStartingDayNumber())% 7 === 0 ||
+      ((day.number + getStartingDayNumber())- 1) % 7 === 0 ||
       index >= fill.length
     ) {
       day.fill = null;
@@ -73,12 +97,11 @@ const Days = () => {
     }
   });
 
-  console.log(fill);
-
   return (
     <DaysWrapper>
+      { Array.from({length: getStartingDayNumber()}, (value, index) => <Day key={`x${index}`} />) }
       {daysOfTheMonth.map((day, index) => (
-        <Day key={`.0${index}`} dayNumber={day.number} fill={day.fill} />
+        <Day key={calculateDecimalPointToString(index)} dayNumber={day.number} fill={day.fill} />
       ))}
     </DaysWrapper>
   );
