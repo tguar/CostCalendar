@@ -19,7 +19,7 @@ const getCurrentYear = () => {
 }
 
 const getStartingDayNumber = () => {
-  return new Date(getCurrentYear(), getCurrentMonthNumber() + 2, 1).getDay();
+  return new Date(getCurrentYear(), getCurrentMonthNumber(), 1).getDay();
 }
 
 const daysInMonth = (year, month) => {
@@ -37,7 +37,7 @@ const calculateDecimalPointToString = (val) => {
 for (let i = 1; i <= daysInMonth(getCurrentMonthNumber(), getCurrentYear()); i++) {
   daysOfTheMonth.push({ number: i });
 }
-
+console.log(getStartingDayNumber());
 const Days = () => {
   const { state } = React.useContext(Store);
   const { hourlyRate, expenses } = state;
