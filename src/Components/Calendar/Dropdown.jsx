@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ReactDropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
@@ -32,6 +33,10 @@ const Dropdown = ({ onChange }) => {
   return (
     <StyledReactDropdown options={options} onChange={handleOnChange} value={value} />
   );
+};
+
+Dropdown.propTypes = {
+  onChange: PropTypes.func.isRequired,
 };
 
 export default Dropdown;
