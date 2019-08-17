@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import ReactDropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
@@ -21,10 +21,17 @@ const options = [
   { value: 4, label: 'semi-monthly' },
   { value: 5, label: 'monthly' },
 ];
-const defaultOption = options[0];
 
-const Dropdown = ({ onChange }) => (
-  <StyledReactDropdown options={options} onChange={onChange} value={defaultOption} />
-);
+const Dropdown = ({ onChange }) => {
+  const [value, setValue] = useState(options[0].label);
+
+  const handleOnChange = (e) => {
+    setValue(e.label);
+    onChange(e);
+  };
+  return (
+    <StyledReactDropdown options={options} onChange={handleOnChange} value={value} />
+  );
+};
 
 export default Dropdown;
