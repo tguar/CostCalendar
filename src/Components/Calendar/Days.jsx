@@ -40,29 +40,27 @@ for (let i = 1; i <= daysInMonth(getCurrentMonthNumber(), getCurrentYear()); i++
 console.log(getStartingDayNumber());
 const Days = () => {
   const { state } = React.useContext(Store);
-  const { hourlyRate, expenses } = state;
+  const { hourlyRate, expenses, incomeCalculationType } = state;
 
-  const workHours = 40 * 4;
-  const income =
-    parseFloat(hourlyRate.substring(2).replace(/,/g, '')) * workHours;
+  const income = calculateIncome(hourlyRate, incomeCalculationType);
 
   const colors = [];
   const fill = [];
 
-  expenses.forEach(expense => {
+  expenses.forEach((expense) => {
     const percent = (parseFloat(expense.expenseAmount) / income) * 100;
     colors.push({
       color: expense.expenseColor,
       monthPercent: percent || 0,
-      dayPercent: percent * 20 || 0
+      dayPercent: percent * 20 || 0,
     });
   });
 
   let index = 0;
   while (
-    index < colors.length &&
-    hourlyRate &&
-    fill.length <= daysOfTheMonth.length
+    index < colors.length
+    && hourlyRate
+    && fill.length <= daysOfTheMonth.length
   ) {
     let capacity = 100;
     const colorMap = {};
@@ -85,7 +83,7 @@ const Days = () => {
   }
 
   index = 0;
-  daysOfTheMonth.forEach(day => {
+  daysOfTheMonth.forEach((day) => {
     if (
       (day.number + getStartingDayNumber())% 7 === 0 ||
       ((day.number + getStartingDayNumber())- 1) % 7 === 0 ||
