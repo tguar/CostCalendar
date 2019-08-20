@@ -50,7 +50,7 @@ const Day = (props) => {
 };
 
 Day.propTypes = {
-  dayNumber: PropTypes.number.isRequired,
+  dayNumber: PropTypes.number,
 };
 
 export default Day;
