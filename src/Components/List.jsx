@@ -7,9 +7,14 @@ function List() {
   const [expenses, setExpenses] = useState([
     {
       expenseName: 'Rent',
-      expenseAmount: 500.00,
+      expenseAmount: 20.99,
       expenseColor: '#ff0800'
     },
+    {
+      expenseName: 'Car',
+      expenseAmount: 10.11,
+      expenseColor: '#8db600'
+    }
   ]);
 
   const { state, dispatch } = React.useContext(Store);
@@ -144,6 +149,7 @@ function List() {
     <form className="expense-list">
       <ul>
         {expenses.map((expense, i) => (
+          // console.log(expense),
           <div key={i} id={i} className="expense">
             <Rectangle
               width={40}
@@ -152,7 +158,7 @@ function List() {
             />
             <input
               type="text"
-              placeholder="Expense"
+              placeholder="test"
               value={expense.expenseName}
               onKeyDown={e => handleKeyDownForExpenseName(e, i)}
               onChange={e => updateExpenseNameAtIndex(e, i)}
