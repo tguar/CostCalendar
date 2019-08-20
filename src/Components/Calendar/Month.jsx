@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import InputCurrency from 'react-input-currency';
+import Dropdown from './Dropdown';
 import { Store } from '../../Store';
 
 const Rate = styled.div`
@@ -28,11 +29,15 @@ const Month = () => {
 
   // console.log(state);
 
-  const inputOnChange = e =>
-    dispatch({
-      type: 'SET_HOURLY_RATE',
-      payload: e
-    });
+  const inputOnChange = e => dispatch({
+    type: 'SET_HOURLY_RATE',
+    payload: e,
+  });
+
+  const dropdownOnChange = e => dispatch({
+    type: 'SET_INCOME_CALCULATION_TYPE',
+    payload: e,
+  });
 
   return (
     <Fragment>
@@ -44,7 +49,7 @@ const Month = () => {
             className="form-control"
           />
           <div className="input-group-append">
-            <span className="input-group-text">per hour</span>
+            <Dropdown onChange={({ value }) => dropdownOnChange(value)} />
           </div>
         </div>
       </Rate>

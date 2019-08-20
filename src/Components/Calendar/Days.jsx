@@ -14,31 +14,67 @@ for (let i = 1; i <= 31; i++) {
   daysOfTheMonth.push({ number: i });
 }
 
+// Assumption is still that 40 hours a week is worked and 4 weeks of work per month
+const calculateIncome = (rate, incomeCalculationType) => {
+  let rateNumber = parseFloat(rate.substring(2).replace(/,/g, ''));
+  switch (incomeCalculationType) {
+    // daily
+    case 1: {
+      rateNumber *= 20;
+      break;
+    }
+    // weekly
+    case 2: {
+      rateNumber *= 4;
+      break;
+    }
+    // bi-weekly
+    case 3: {
+      rateNumber *= 2;
+      break;
+    }
+    // semi-weekly
+    case 4: {
+      rateNumber *= 2;
+      break;
+    }
+    // monthly
+    case 5: {
+      break;
+    }
+    // hourly
+    case 0:
+    default: {
+      rateNumber = rateNumber * 4 * 40;
+      break;
+    }
+  }
+  return rateNumber;
+};
+
 const Days = () => {
   const { state } = React.useContext(Store);
-  const { hourlyRate, expenses } = state;
+  const { hourlyRate, expenses, incomeCalculationType } = state;
 
-  const workHours = 40 * 4;
-  const income =
-    parseFloat(hourlyRate.substring(2).replace(/,/g, '')) * workHours;
+  const income = calculateIncome(hourlyRate, incomeCalculationType);
 
   const colors = [];
   const fill = [];
 
-  expenses.forEach(expense => {
+  expenses.forEach((expense) => {
     const percent = (parseFloat(expense.expenseAmount) / income) * 100;
     colors.push({
       color: expense.expenseColor,
       monthPercent: percent || 0,
-      dayPercent: percent * 20 || 0
+      dayPercent: percent * 20 || 0,
     });
   });
 
   let index = 0;
   while (
-    index < colors.length &&
-    hourlyRate &&
-    fill.length <= daysOfTheMonth.length
+    index < colors.length
+    && hourlyRate
+    && fill.length <= daysOfTheMonth.length
   ) {
     let capacity = 100;
     const colorMap = {};
@@ -61,11 +97,11 @@ const Days = () => {
   }
 
   index = 0;
-  daysOfTheMonth.forEach(day => {
+  daysOfTheMonth.forEach((day) => {
     if (
-      day.number % 7 === 0 ||
-      (day.number - 1) % 7 === 0 ||
-      index >= fill.length
+      day.number % 7 === 0
+      || (day.number - 1) % 7 === 0
+      || index >= fill.length
     ) {
       day.fill = null;
     } else {
