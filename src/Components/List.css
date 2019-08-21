@@ -6,8 +6,8 @@
   color: white;
 }
 
-.dollar-sign {
-  color: black;
+.currency-input {
+  text-align: right;
 }
 
 .expense {
