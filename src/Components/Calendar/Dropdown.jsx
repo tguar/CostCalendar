@@ -10,6 +10,8 @@ const StyledReactDropdown = styled(ReactDropdown)`
     display: flex;
     height: calc(1.5em + 0.75rem + 2px);
     width: 170px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
   }
 
 `;
