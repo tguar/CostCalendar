@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './List.css';
 import { Rectangle } from 'react-shapes';
+import CurrencyInput from 'react-currency-input';
 import { Store } from '../Store';
 
 function List() {
@@ -8,11 +9,11 @@ function List() {
     {
       expenseName: 'Rent',
       expenseAmount: 500.00,
-      expenseColor: '#ff0800'
+      expenseColor: '#ff0800',
     },
   ]);
 
-  const { state, dispatch } = React.useContext(Store);
+  const { dispatch } = React.useContext(Store);
 
   const COLOR_ARRAY = [
     '#FF6633',
@@ -64,7 +65,7 @@ function List() {
     '#4DB380',
     '#FF4D4D',
     '#99E6E6',
-    '#6666FF'
+    '#6666FF',
   ];
 
   function handleKeyDownForExpenseName(e, i) {
@@ -78,28 +79,32 @@ function List() {
     }
   }
 
-  function handleKeyDownForExpenseAmount(e, i) {
-    if (e.key === 'Enter') {
-      createExpenseAtIndex(e, i);
-    }
-    if (e.key === 'Backspace' && expenses[i].expenseAmount === '') {
-      e.preventDefault();
-      return removeExpensesAtIndex(i);
-    }
-  }
-
-  function createExpenseAtIndex(e, i) {
+  const addNewExpenseEntry = (e) => {
     const newExpenses = [...expenses];
-    newExpenses.splice(i + 1, 0, {
+    newExpenses.push({
       expenseName: '',
-      expenseAmount: 0.0,
-      expenseColor: COLOR_ARRAY[i]
+      expenseAmount: 0,
+      expenseColor: COLOR_ARRAY[expenses.length],
     });
     setExpenses(newExpenses);
     setTimeout(() => {
-      document.forms[0].elements[2 * i + 2].focus();
+      const expenseInputs = document.querySelectorAll('.expense-input');
+      expenseInputs[expenseInputs.length - 1].focus();
     }, 0);
-  }
+  };
+
+
+  const handleKeyDownForExpenseAmount = (e) => {
+    const keyboard = e.key;
+    const { index } = e.target.dataset;
+    if (keyboard === 'Enter') {
+      addNewExpenseEntry(e);
+    }
+    if (keyboard === 'Backspace' && expenses[index].expenseAmount === 0.00 && index !== '0') {
+      return removeExpensesAtIndex(index);
+    }
+    return null;
+  };
 
   function updateExpenseNameAtIndex(e, i) {
     const newExpenses = [...expenses];
@@ -107,17 +112,16 @@ function List() {
     setExpenses(newExpenses);
   }
 
-  function updateExpenseAmountAtIndex(e, i) {
+  const updateExpenseAmountAtIndex = (e, valueString, valueFloat) => {
     const newExpenses = [...expenses];
-    newExpenses[i].expenseAmount = e.target.value;
+    const { index } = e.target.dataset;
+    newExpenses[index].expenseAmount = valueFloat;
     setExpenses(newExpenses);
-  }
+  };
 
   function removeExpensesAtIndex(i) {
     if (i === 0 && expenses.length === 1) return;
-    setExpenses(expenses =>
-      expenses.slice(0, i).concat(expenses.slice(i + 1, expenses.length))
-    );
+    setExpenses(expenses => expenses.slice(0, i).concat(expenses.slice(i + 1, expenses.length)));
     setTimeout(() => {
       document.forms[0].elements[2 * i - 1].focus();
     }, 0);
@@ -132,39 +136,36 @@ function List() {
   }
 
   useEffect(() => {
-    if (expenses.length !== state.expenses.length) {
-      dispatch({
-        type: 'SET_EXPENSES',
-        payload: expenses
-      });
-    }
-  });
+    dispatch({
+      type: 'SET_EXPENSES',
+      payload: expenses,
+    });
+  }, [dispatch, expenses]);
 
   return (
     <form className="expense-list">
       <ul>
-        {expenses.map((expense, i) => (
-          <div key={i} id={i} className="expense">
+        {expenses.map((expense, index) => (
+          <div key={index} id={index} className="expense">
             <Rectangle
-              width={40}
-              height={20}
               fill={{ color: expense.expenseColor }}
+              height={20}
+              width={40}
             />
             <input
-              type="text"
+              className="expense-input"
+              onChange={e => updateExpenseNameAtIndex(e, index)}
+              onKeyDown={e => handleKeyDownForExpenseName(e, index)}
               placeholder="Expense"
+              type="text"
               value={expense.expenseName}
-              onKeyDown={e => handleKeyDownForExpenseName(e, i)}
-              onChange={e => updateExpenseNameAtIndex(e, i)}
             />
-            <input
-              type="number"
-              step=".01"
-              min=".01"
-              max="10000"
+            <CurrencyInput
+              className="currency-input"
+              data-index={index}
+              onChangeEvent={updateExpenseAmountAtIndex}
+              onKeyDown={handleKeyDownForExpenseAmount}
               value={expense.expenseAmount}
-              onKeyDown={e => handleKeyDownForExpenseAmount(e, i)}
-              onChange={e => updateExpenseAmountAtIndex(e, i)}
             />
           </div>
         ))}

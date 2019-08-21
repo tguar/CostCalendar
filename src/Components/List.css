@@ -5,6 +5,10 @@
     /* justify-content: center; */
     color: white;
   }
+
+  .currency-input::before {
+    content: "$"
+  }
   
   .expense {
     display: flex;
