@@ -1,32 +1,36 @@
 .expense-list {
-    /* display: flex; */
-    flex-direction: column;
-    /* align-items: center; */
-    /* justify-content: center; */
-    color: white;
-  }
+  /* display: flex; */
+  flex-direction: column;
+  /* align-items: center; */
+  /* justify-content: center; */
+  color: white;
+}
 
-  .currency-input::before {
-    content: "$"
-  }
-  
-  .expense {
-    display: flex;
-    align-items: center;
-    margin: 1rem 0;
-  }
-  
-  ul {
-    list-style: none;
-    padding: 0;
-    line-height: 2rem;
-  }
-  
-  input {
-    border: none;
-    background: transparent;
-    color: black;
-    font-size: 1.4rem;
-    outline: none;
-    width: 100%;
-  }
+.currency-input {
+  text-align: right;
+}
+
+.dollar-sign {
+  color: black;
+}
+
+.expense {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  line-height: 2rem;
+}
+
+input {
+  border: none;
+  background: transparent;
+  color: black;
+  font-size: 1.4rem;
+  outline: none;
+  width: 100%;
+}

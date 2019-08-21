@@ -160,6 +160,7 @@ function List() {
               type="text"
               value={expense.expenseName}
             />
+            <span className="dollar-sign">$</span>
             <CurrencyInput
               className="currency-input"
               data-index={index}
