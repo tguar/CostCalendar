@@ -68,23 +68,21 @@ function List() {
     '#6666FF',
   ];
 
-  function handleKeyDownForExpenseName(e, i) {
-    if (e.key === 'Enter') {
-      e.target.nextSibling.focus();
-      e.preventDefault();
-    }
-    if (e.key === 'Backspace' && expenses[i].expenseName === '') {
-      e.preventDefault();
-      return removeExpensesAtIndex(i);
-    }
-  }
-
+  // reducer that returns the last expense based on each expense's index position in COLOR_ARRAY
+  const lastExpenseObjectBasedOnPositionInColorArray = expenses.reduce((prev, current) => (COLOR_ARRAY.indexOf(prev.expenseColor) > COLOR_ARRAY.indexOf(current.expenseColor)) ? prev : current, COLOR_ARRAY[0])
+  
   const addNewExpenseEntry = (e) => {
-    const newExpenses = [...expenses];
+    const newExpenses = [...expenses];    
+    const nextColor = COLOR_ARRAY[COLOR_ARRAY.indexOf(lastExpenseObjectBasedOnPositionInColorArray.expenseColor) + 1]
+
+    if(nextColor === undefined){
+      window.alert("You seem to have more expenses our site can handle. From now on your additional expenses will not be tracked.");
+    }
+
     newExpenses.push({
       expenseName: '',
       expenseAmount: 0,
-      expenseColor: COLOR_ARRAY[expenses.length],
+      expenseColor: nextColor
     });
     setExpenses(newExpenses);
     setTimeout(() => {
@@ -93,6 +91,12 @@ function List() {
     }, 0);
   };
 
+  const updateExpenseAmountAtIndex = (e, valueString, valueFloat) => {
+    const newExpenses = [...expenses];
+    const { index } = e.target.dataset;
+    newExpenses[index].expenseAmount = valueFloat;
+    setExpenses(newExpenses);
+  };
 
   const handleKeyDownForExpenseAmount = (e) => {
     const keyboard = e.key;
@@ -112,16 +116,23 @@ function List() {
     setExpenses(newExpenses);
   }
 
-  const updateExpenseAmountAtIndex = (e, valueString, valueFloat) => {
-    const newExpenses = [...expenses];
-    const { index } = e.target.dataset;
-    newExpenses[index].expenseAmount = valueFloat;
-    setExpenses(newExpenses);
-  };
+  function handleKeyDownForExpenseName(e, i) {
+    if (e.key === 'Enter') {
+      e.target.nextSibling.focus();
+      e.preventDefault();
+    }
+    if (e.key === 'Backspace' && expenses[i].expenseName === '') {
+      e.preventDefault();
+      return removeExpensesAtIndex(i);
+    }
+  }
 
   function removeExpensesAtIndex(i) {
-    if (i === 0 && expenses.length === 1) return;
-    setExpenses(expenses => expenses.slice(0, i).concat(expenses.slice(i + 1, expenses.length)));
+    let j = parseInt(i);
+    if (j === 0 && expenses.length === j) return;
+
+    setExpenses([...expenses.filter(function(val, index) { return index !== j })]);
+
     setTimeout(() => {
       document.forms[0].elements[2 * i - 1].focus();
     }, 0);
