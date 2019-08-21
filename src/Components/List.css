@@ -1,54 +1,29 @@
 .expense-list {
-    display: flex;
-    flex-direction: column;
-    color: white;
-    overflow-x:hidden;
-    max-width: 100%;
-  }
-  
-  .expense {
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-  }
-  
-  ul {
-    list-style: none;
-    padding: 0;
-    width: 100%;
-  }
-  
-  .expense-title {
-    padding-left: .5em;
-    border: none;
-    background: transparent;
-    color: black;
-    font-size: 1.4rem;
-    outline: none;
-    width: 40%;
-  }
+  flex-direction: column;
+  color: white;
+}
 
-  .expense-title:focus {
-    outline: 0 !important;
-    text-decoration:underline;
-    border-color: none !important;
-    box-shadow: none;
-  }
+.currency-input {
+  text-align: right;
+}
 
-  .expense-amount {
-    border: none;
-    background: transparent;
-    color: black;
-    font-size: 1.4rem;
-    outline: none;
-    max-width: 40%;
-    outline: 2px black;
-  }
+.expense {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
 
-  .expense-amount:focus {
-    outline: 0 !important;
-    text-decoration:underline;
-    border-color: none !important;
-    box-shadow: none;
-  }
+ul {
+  list-style: none;
+  padding: 0;
+  line-height: 2rem;
+}
 
+input {
+  border: none;
+  background: transparent;
+  color: black;
+  font-size: 1.4rem;
+  outline: none;
+  width: 100%;
+}
