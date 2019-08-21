@@ -6,17 +6,18 @@ const DayWrapper = styled.div`
   align-items: center;
   display: flex;
   flex: 0 0 calc(100% / 7);
-  height: 75px;
+  height: 90px;
   justify-content: center;
 `;
 
 const Number = styled.div`
-  border: 1px solid #000000;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
   display: flex;
   flex-direction: column-reverse;
-  height: 80%;
+  height: 90%;
   position: relative;
-  width: 80%;
+  width: 90%;
 
   &:after {
     align-items: center;

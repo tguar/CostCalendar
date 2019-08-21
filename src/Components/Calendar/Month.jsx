@@ -8,6 +8,7 @@ const Rate = styled.div`
   display: flex;
   justify-content: center;
   margin: 1rem;
+  border-radius: 5px;
 `;
 
 const Week = styled.div`
