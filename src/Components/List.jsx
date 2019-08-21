@@ -141,12 +141,13 @@ function List() {
   });
 
   return (
-    <form className="expense-list input-group">
+    <form className="expense-list">
       <ul>
+      {/* <div className="input-group"> */}
         {expenses.map((expense, i) => (
-          <div key={i} id={i} className="expense">
+          <div key={i} id={i} className="expense input-group">
             <Rectangle
-              width={40}
+              width={20}
               height={20}        
               fill={{ color: expense.expenseColor }}
             />
@@ -171,6 +172,7 @@ function List() {
             />
           </div>
         ))}
+        {/* </div> */}
       </ul>
     </form>
   );
