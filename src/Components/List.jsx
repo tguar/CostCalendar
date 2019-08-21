@@ -123,7 +123,13 @@ function List() {
     }
     if (e.key === 'Backspace' && expenses[i].expenseName === '') {
       e.preventDefault();
-      return removeExpensesAtIndex(i);
+      
+      if(i !== 0)
+      {
+        return removeExpensesAtIndex(i);
+      }
+
+      return;
     }
   }
 
