@@ -141,16 +141,18 @@ function List() {
   });
 
   return (
-    <form className="expense-list">
+    <form className="expense-list input-group">
       <ul>
         {expenses.map((expense, i) => (
           <div key={i} id={i} className="expense">
             <Rectangle
               width={40}
-              height={20}
+              height={20}        
               fill={{ color: expense.expenseColor }}
             />
             <input
+              // style={{paddingLeft: '.5em'}}
+              className="expense-title form-control"
               type="text"
               placeholder="Expense"
               value={expense.expenseName}
@@ -158,6 +160,7 @@ function List() {
               onChange={e => updateExpenseNameAtIndex(e, i)}
             />
             <input
+              className="expense-amount form-control"
               type="number"
               step=".01"
               min=".01"

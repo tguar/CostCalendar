@@ -1,15 +1,19 @@
 .expense-list {
+  display: flex;
     /* display: flex; */
     flex-direction: column;
     /* align-items: center; */
     /* justify-content: center; */
     color: white;
+    overflow-x:hidden;
+    /* overflow: hidden; */
   }
   
   .expense {
     display: flex;
     align-items: center;
     margin: 1rem 0;
+    overflow: hidden;
   }
   
   ul {
@@ -19,11 +23,22 @@
     width: 500px;
   }
   
-  input {
+  .expense-title{
+    padding-left: .5em;
     border: none;
     background: transparent;
     color: black;
     font-size: 1.4rem;
     outline: none;
-    width: 100%;
+    width: 40%;
   }
+  
+  .expense-amount {
+    border: none;
+    background: transparent;
+    color: black;
+    font-size: 1.4rem;
+    outline: none;
+    width: 40%;
+  }
+
