@@ -12,29 +12,32 @@ const daysOfTheMonth = [];
 
 const getCurrentMonthNumber = () => {
   return new Date().getMonth();
-}
+};
 
 const getCurrentYear = () => {
   return new Date().getFullYear();
-}
+};
 
 const getStartingDayNumber = () => {
   return new Date(getCurrentYear(), getCurrentMonthNumber(), 1).getDay();
-}
+};
 
 const daysInMonth = (year, month) => {
   return new Date(year, month, 0).getDate();
-}
+};
 
-const calculateDecimalPointToString = (val) => {
-  if(val < 10)
-  {
+const calculateDecimalPointToString = val => {
+  if (val < 10) {
     return `.0${val}`;
   }
   return `.${val}`;
-}
+};
 
-for (let i = 1; i <= daysInMonth(getCurrentMonthNumber(), getCurrentYear()); i++) {
+for (
+  let i = 1;
+  i <= daysInMonth(getCurrentMonthNumber(), getCurrentYear());
+  i++
+) {
   daysOfTheMonth.push({ number: i });
 }
 
@@ -85,7 +88,7 @@ const Days = () => {
   const colors = [];
   const fill = [];
 
-  expenses.forEach((expense) => {
+  expenses.forEach(expense => {
     const percent = (parseFloat(expense.expenseAmount) / income) * 100;
     colors.push({
       color: expense.expenseColor,
@@ -96,9 +99,9 @@ const Days = () => {
 
   let index = 0;
   while (
-    index < colors.length
-    && hourlyRate
-    && fill.length <= daysOfTheMonth.length
+    index < colors.length &&
+    hourlyRate &&
+    fill.length <= daysOfTheMonth.length
   ) {
     let capacity = 100;
     const colorMap = {};
@@ -121,10 +124,10 @@ const Days = () => {
   }
 
   index = 0;
-  daysOfTheMonth.forEach((day) => {
+  daysOfTheMonth.forEach(day => {
     if (
-      (day.number + getStartingDayNumber())% 7 === 0 ||
-      ((day.number + getStartingDayNumber())- 1) % 7 === 0 ||
+      (day.number + getStartingDayNumber()) % 7 === 0 ||
+      (day.number + getStartingDayNumber() - 1) % 7 === 0 ||
       index >= fill.length
     ) {
       day.fill = null;
@@ -135,9 +138,15 @@ const Days = () => {
 
   return (
     <DaysWrapper>
-      { Array.from({length: getStartingDayNumber()}, (value, index) => <Day key={`x${index}`} />) }
+      {Array.from({ length: getStartingDayNumber() }, (value, index) => (
+        <Day key={`x${index}`} />
+      ))}
       {daysOfTheMonth.map((day, index) => (
-        <Day key={calculateDecimalPointToString(index)} dayNumber={day.number} fill={day.fill} />
+        <Day
+          key={calculateDecimalPointToString(index)}
+          dayNumber={day.number}
+          fill={day.fill}
+        />
       ))}
     </DaysWrapper>
   );
