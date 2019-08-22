@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './List.css';
 import { Rectangle } from 'react-shapes';
-import CurrencyInput from 'react-currency-input';
 import { Store } from '../Store';
 
 function List() {
@@ -70,51 +69,7 @@ function List() {
 
   // reducer that returns the last expense based on each expense's index position in COLOR_ARRAY
   const lastExpenseObjectBasedOnPositionInColorArray = expenses.reduce((prev, current) => (COLOR_ARRAY.indexOf(prev.expenseColor) > COLOR_ARRAY.indexOf(current.expenseColor)) ? prev : current, COLOR_ARRAY[0])
-  
-  const addNewExpenseEntry = (e) => {
-    const newExpenses = [...expenses];    
-    const nextColor = COLOR_ARRAY[COLOR_ARRAY.indexOf(lastExpenseObjectBasedOnPositionInColorArray.expenseColor) + 1]
 
-    if(nextColor === undefined){
-      window.alert("You seem to have more expenses our site can handle. From now on your additional expenses will not be tracked.");
-    }
-
-    newExpenses.push({
-      expenseName: '',
-      expenseAmount: 0,
-      expenseColor: nextColor
-    });
-    setExpenses(newExpenses);
-    setTimeout(() => {
-      const expenseInputs = document.querySelectorAll('.expense-input');
-      expenseInputs[expenseInputs.length - 1].focus();
-    }, 0);
-  };
-
-  const updateExpenseAmountAtIndex = (e, valueString, valueFloat) => {
-    const newExpenses = [...expenses];
-    const { index } = e.target.dataset;
-    newExpenses[index].expenseAmount = valueFloat;
-    setExpenses(newExpenses);
-  };
-
-  const handleKeyDownForExpenseAmount = (e) => {
-    const keyboard = e.key;
-    const { index } = e.target.dataset;
-    if (keyboard === 'Enter') {
-      addNewExpenseEntry(e);
-    }
-    if (keyboard === 'Backspace' && expenses[index].expenseAmount === 0.00 && index !== '0') {
-      return removeExpensesAtIndex(index);
-    }
-    return null;
-  };
-
-  function updateExpenseNameAtIndex(e, i) {
-    const newExpenses = [...expenses];
-    newExpenses[i].expenseName = e.target.value;
-    setExpenses(newExpenses);
-  }
 
   function handleKeyDownForExpenseName(e, i) {
     if (e.key === 'Enter') {
@@ -123,33 +78,75 @@ function List() {
     }
     if (e.key === 'Backspace' && expenses[i].expenseName === '') {
       e.preventDefault();
-      
-      if(i !== 0)
-      {
-        return removeExpensesAtIndex(i);
-      }
-
-      return;
+      return removeExpensesAtIndex(i);
     }
   }
 
-  function removeExpensesAtIndex(i) {
-    let j = parseInt(i);
-    if (j === 0 && expenses.length === j) return;
+  function handleKeyDownForExpenseAmount(e, i) {
+    if (e.key === 'Enter') {
+      let { value, min, max } = e.target;
+      value = Math.max(Number(min), Math.min(Number(max), Number(value)));
+      const newExpenses = [...expenses];
+      newExpenses[i].expenseAmount = financial(value);
+      setExpenses(newExpenses);
 
-    setExpenses([...expenses.filter(function(val, index) { return index !== j })]);
+      createExpenseAtIndex(e, i);
+    }
+    if (e.key === 'Backspace' && expenses[i].expenseAmount === 0) {
+      return;
+    }
+    if (e.key === 'Backspace' && expenses[i].expenseAmount === '') {
+      e.preventDefault();
+      return removeExpensesAtIndex(i);
+    }
+  }
 
+  function createExpenseAtIndex(e, i) {
+    const nextColor = COLOR_ARRAY[COLOR_ARRAY.indexOf(lastExpenseObjectBasedOnPositionInColorArray.expenseColor) + 1]
+
+    if (nextColor === undefined) {
+      window.alert("You seem to have more expenses our site can handle. From now on your additional expenses will not be tracked.");
+    }
+
+    const newExpenses = [...expenses];
+    newExpenses.splice(i + 1, 0, {
+      expenseName: '',
+      expenseAmount: '',
+      expenseColor: nextColor
+    });
+    setExpenses(newExpenses);
     setTimeout(() => {
-      document.forms[0].elements[2 * i - 1].focus();
+      document.forms[0].elements[2 * i + 2].focus();
     }, 0);
   }
 
-  // eslint-disable-next-line
-    function toggleExpenseCompleteAtIndex(index) {
-    const temporaryExpenses = [...expenses];
-    temporaryExpenses[index].isCompleted = !temporaryExpenses[index]
-      .isCompleted;
-    setExpenses(temporaryExpenses);
+  function updateExpenseNameAtIndex(e, i) {
+    const newExpenses = [...expenses];
+    newExpenses[i].expenseName = e.target.value;
+    setExpenses(newExpenses);
+  }
+
+  function financial(x) {
+    return Number.parseFloat(x).toFixed(2);
+  }
+
+  function updateExpenseAmountAtIndex(e, i) {
+    let { value, min, max } = e.target;
+    value = Math.max(Number(min), Math.min(Number(max), Number(value)));
+
+    const newExpenses = [...expenses];
+    newExpenses[i].expenseAmount = value;
+    setExpenses(newExpenses);
+  }
+
+  function removeExpensesAtIndex(i) {
+    if (i === 0 && expenses.length === 1) return;
+    setExpenses(expenses =>
+      expenses.slice(0, i).concat(expenses.slice(i + 1, expenses.length))
+    );
+    setTimeout(() => {
+      document.forms[0].elements[2 * i - 1].focus();
+    }, 0);
   }
 
   useEffect(() => {
@@ -177,12 +174,15 @@ function List() {
               type="text"
               value={expense.expenseName}
             />
-            <CurrencyInput
+            <input
               className="currency-input"
-              data-index={index}
-              onChangeEvent={updateExpenseAmountAtIndex}
-              onKeyDown={handleKeyDownForExpenseAmount}
+              min="0.00"
+              max="9999.99"
+              step=".01"
               value={expense.expenseAmount}
+              onKeyDown={e => handleKeyDownForExpenseAmount(e, index)}
+              onChange={e => updateExpenseAmountAtIndex(e, index)}
+              type="number"
             />
           </div>
         ))}
