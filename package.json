@@ -22,14 +22,22 @@
   },
   "eslintConfig": {
     "extends": [
-      "airbnb"
+      "react-app",
+      "plugin:prettier/recommended"
     ],
     "plugins": [
       "react-hooks"
     ],
     "rules": {
       "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn"
+      "react-hooks/exhaustive-deps": "warn",
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": true,
+          "trailingComma": "es5"
+        }
+      ]
     }
   },
   "browserslist": {
@@ -45,9 +53,8 @@
     ]
   },
   "devDependencies": {
-    "eslint-config-airbnb": "17.1.1",
-    "eslint-plugin-import": "^2.18.0",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.14.2"
+    "eslint-config-prettier": "^6.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "prettier": "^1.18.2"
   }
 }
