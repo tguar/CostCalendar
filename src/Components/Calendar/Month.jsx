@@ -30,15 +30,17 @@ const Month = () => {
 
   // console.log(state);
 
-  const inputOnChange = e => dispatch({
-    type: 'SET_HOURLY_RATE',
-    payload: e,
-  });
+  const inputOnChange = e =>
+    dispatch({
+      type: 'SET_HOURLY_RATE',
+      payload: e,
+    });
 
-  const dropdownOnChange = e => dispatch({
-    type: 'SET_INCOME_CALCULATION_TYPE',
-    payload: e,
-  });
+  const dropdownOnChange = e =>
+    dispatch({
+      type: 'SET_INCOME_CALCULATION_TYPE',
+      payload: e,
+    });
 
   return (
     <Fragment>

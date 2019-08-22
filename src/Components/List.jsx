@@ -7,7 +7,7 @@ function List() {
   const [expenses, setExpenses] = useState([
     {
       expenseName: 'Rent',
-      expenseAmount: 500.00,
+      expenseAmount: 500.0,
       expenseColor: '#ff0800',
     },
   ]);
@@ -68,8 +68,14 @@ function List() {
   ];
 
   // reducer that returns the last expense based on each expense's index position in COLOR_ARRAY
-  const lastExpenseObjectBasedOnPositionInColorArray = expenses.reduce((prev, current) => (COLOR_ARRAY.indexOf(prev.expenseColor) > COLOR_ARRAY.indexOf(current.expenseColor)) ? prev : current, COLOR_ARRAY[0])
-
+  const lastExpenseObjectBasedOnPositionInColorArray = expenses.reduce(
+    (prev, current) =>
+      COLOR_ARRAY.indexOf(prev.expenseColor) >
+      COLOR_ARRAY.indexOf(current.expenseColor)
+        ? prev
+        : current,
+    COLOR_ARRAY[0]
+  );
 
   function handleKeyDownForExpenseName(e, i) {
     if (e.key === 'Enter') {
@@ -93,7 +99,8 @@ function List() {
       createExpenseAtIndex(e, i);
     }
     if (e.key === 'Backspace' && expenses[i].expenseAmount === 0) {
-      return;
+      e.preventDefault();
+      return removeExpensesAtIndex(i);
     }
     if (e.key === 'Backspace' && expenses[i].expenseAmount === '') {
       e.preventDefault();
@@ -102,17 +109,24 @@ function List() {
   }
 
   function createExpenseAtIndex(e, i) {
-    const nextColor = COLOR_ARRAY[COLOR_ARRAY.indexOf(lastExpenseObjectBasedOnPositionInColorArray.expenseColor) + 1]
+    const nextColor =
+      COLOR_ARRAY[
+        COLOR_ARRAY.indexOf(
+          lastExpenseObjectBasedOnPositionInColorArray.expenseColor
+        ) + 1
+      ];
 
     if (nextColor === undefined) {
-      window.alert("You seem to have more expenses our site can handle. From now on your additional expenses will not be tracked.");
+      window.alert(
+        'You seem to have more expenses our site can handle. From now on your additional expenses will not be tracked.'
+      );
     }
 
     const newExpenses = [...expenses];
     newExpenses.splice(i + 1, 0, {
       expenseName: '',
       expenseAmount: '',
-      expenseColor: nextColor
+      expenseColor: nextColor,
     });
     setExpenses(newExpenses);
     setTimeout(() => {

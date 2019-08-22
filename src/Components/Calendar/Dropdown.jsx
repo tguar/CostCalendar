@@ -5,7 +5,7 @@ import ReactDropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
 const StyledReactDropdown = styled(ReactDropdown)`
-  .Dropdown-control { 
+  .Dropdown-control {
     align-items: center;
     display: flex;
     height: calc(1.5em + 0.75rem + 2px);
@@ -13,7 +13,6 @@ const StyledReactDropdown = styled(ReactDropdown)`
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
   }
-
 `;
 
 const options = [
@@ -28,12 +27,16 @@ const options = [
 const Dropdown = ({ onChange }) => {
   const [value, setValue] = useState(options[0].label);
 
-  const handleOnChange = (e) => {
+  const handleOnChange = e => {
     setValue(e.label);
     onChange(e);
   };
   return (
-    <StyledReactDropdown options={options} onChange={handleOnChange} value={value} />
+    <StyledReactDropdown
+      options={options}
+      onChange={handleOnChange}
+      value={value}
+    />
   );
 };
 
