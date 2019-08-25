@@ -3,10 +3,6 @@
   color: white;
 }
 
-.currency-input {
-  text-align: right;
-}
-
 .expense {
   display: flex;
   align-items: center;
