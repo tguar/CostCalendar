@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './List.css';
+import styled from 'styled-components';
 import { Rectangle } from 'react-shapes';
+import Cleave from 'cleave.js/react';
 import { Store } from '../Store';
+
+const CurrencyInput = styled(Cleave)`
+  text-align: right;
+`;
 
 function List() {
   const [expenses, setExpenses] = useState([
     {
       expenseName: 'Rent',
-      expenseAmount: 500.0,
+      expenseAmount: Number(900).toFixed(2),
       expenseColor: '#ff0800',
     },
   ]);
@@ -90,10 +96,9 @@ function List() {
 
   function handleKeyDownForExpenseAmount(e, i) {
     if (e.key === 'Enter') {
-      let { value, min, max } = e.target;
-      value = Math.max(Number(min), Math.min(Number(max), Number(value)));
+      let { value } = e.target;
       const newExpenses = [...expenses];
-      newExpenses[i].expenseAmount = financial(value);
+      newExpenses[i].expenseAmount = Number(value).toFixed(2);
       setExpenses(newExpenses);
 
       createExpenseAtIndex(e, i);
@@ -140,13 +145,8 @@ function List() {
     setExpenses(newExpenses);
   }
 
-  function financial(x) {
-    return Number.parseFloat(x).toFixed(2);
-  }
-
   function updateExpenseAmountAtIndex(e, i) {
-    let { value, min, max } = e.target;
-    value = Math.max(Number(min), Math.min(Number(max), Number(value)));
+    const { value } = e.target;
 
     const newExpenses = [...expenses];
     newExpenses[i].expenseAmount = value;
@@ -188,7 +188,7 @@ function List() {
               type="text"
               value={expense.expenseName}
             />
-            <input
+            {/* <input
               className="currency-input"
               min="0.00"
               max="9999.99"
@@ -197,6 +197,17 @@ function List() {
               onKeyDown={e => handleKeyDownForExpenseAmount(e, index)}
               onChange={e => updateExpenseAmountAtIndex(e, index)}
               type="number"
+            /> */}
+            <CurrencyInput
+              onChange={e => updateExpenseAmountAtIndex(e, index)}
+              onKeyDown={e => handleKeyDownForExpenseAmount(e, index)}
+              options={{
+                numeral: true,
+                numeralThousandsGroupStyle: 'thousand',
+                numeralPositiveOnly: true,
+              }}
+              placeholder="0.00"
+              value={expense.expenseAmount}
             />
           </div>
         ))}
