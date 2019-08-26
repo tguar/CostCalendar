@@ -13,7 +13,7 @@ function List() {
   const [expenses, setExpenses] = useState([
     {
       expenseName: 'Rent',
-      expenseAmount: 500.0,
+      expenseAmount: Number(900).toFixed(2),
       expenseColor: '#ff0800',
     },
   ]);
@@ -98,7 +98,7 @@ function List() {
     if (e.key === 'Enter') {
       let { value } = e.target;
       const newExpenses = [...expenses];
-      newExpenses[i].expenseAmount = value;
+      newExpenses[i].expenseAmount = Number(value).toFixed(2);
       setExpenses(newExpenses);
 
       createExpenseAtIndex(e, i);
@@ -204,6 +204,7 @@ function List() {
               options={{
                 numeral: true,
                 numeralThousandsGroupStyle: 'thousand',
+                numeralPositiveOnly: true,
               }}
               placeholder="0.00"
               value={expense.expenseAmount}
