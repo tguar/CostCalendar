@@ -36,7 +36,7 @@ const Progress = styled.div`
   height: ${({ height }) => `${Math.ceil(height)}%`};
 `;
 
-const Day = (props) => {
+const Day = props => {
   const { dayNumber, fill } = props;
   const keys = fill ? Object.keys(fill) : [];
   return (

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Day from './Day';
+import { removeCommasFromString } from '../../helpers';
 import { Store } from '../../Store';
 
 const DaysWrapper = styled.div`
@@ -43,7 +44,7 @@ for (
 
 // Assumption is still that 40 hours a week is worked and 4 weeks of work per month
 const calculateIncome = (rate, incomeCalculationType) => {
-  let rateNumber = parseFloat(rate.substring(2).replace(/,/g, ''));
+  let rateNumber = removeCommasFromString(rate);
   switch (incomeCalculationType) {
     // daily
     case 1: {
@@ -89,7 +90,8 @@ const Days = () => {
   const fill = [];
 
   expenses.forEach(expense => {
-    const percent = (parseFloat(expense.expenseAmount) / income) * 100;
+    const percent =
+      (removeCommasFromString(expense.expenseAmount) / income) * 100;
     colors.push({
       color: expense.expenseColor,
       monthPercent: percent || 0,
