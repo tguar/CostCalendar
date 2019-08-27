@@ -3,6 +3,7 @@ import './List.css';
 import styled from 'styled-components';
 import { Rectangle } from 'react-shapes';
 import Cleave from 'cleave.js/react';
+import { removeCommasFromString } from '../helpers';
 import { Store } from '../Store';
 
 const CurrencyInput = styled(Cleave)`
@@ -97,8 +98,9 @@ function List() {
   function handleKeyDownForExpenseAmount(e, i) {
     if (e.key === 'Enter') {
       let { value } = e.target;
+      const removedCommaValue = removeCommasFromString(value);
       const newExpenses = [...expenses];
-      newExpenses[i].expenseAmount = Number(value).toFixed(2);
+      newExpenses[i].expenseAmount = Number(removedCommaValue).toFixed(2);
       setExpenses(newExpenses);
 
       createExpenseAtIndex(e, i);
