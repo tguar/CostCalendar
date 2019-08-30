@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
-import styled from 'styled-components';
-import Cleave from 'cleave.js/react';
-import Dropdown from './Dropdown';
-import { Store } from '../../Store';
-import { removeCommasFromString } from '../../helpers';
+import React, { Fragment } from "react";
+import styled from "styled-components";
+import Cleave from "cleave.js/react";
+import Dropdown from "./Dropdown";
+import { Store } from "../../Store";
+import { removeCommasFromString } from "../../helpers";
 
 const Rate = styled.div`
   display: flex;
@@ -34,23 +34,23 @@ const Month = () => {
   const inputOnChange = e => {
     const { value } = e.target;
     dispatch({
-      type: 'SET_HOURLY_RATE',
-      payload: removeCommasFromString(value).toString(),
+      type: "SET_HOURLY_RATE",
+      payload: removeCommasFromString(value).toString()
     });
   };
 
   const inputOnBlur = e => {
     const { hourlyRate } = state;
     dispatch({
-      type: 'SET_HOURLY_RATE',
-      payload: removeCommasFromString(hourlyRate).toFixed(2),
+      type: "SET_HOURLY_RATE",
+      payload: removeCommasFromString(hourlyRate).toFixed(2)
     });
   };
 
   const dropdownOnChange = e =>
     dispatch({
-      type: 'SET_INCOME_CALCULATION_TYPE',
-      payload: e,
+      type: "SET_INCOME_CALCULATION_TYPE",
+      payload: e
     });
 
   return (
@@ -63,8 +63,8 @@ const Month = () => {
             onChange={inputOnChange}
             options={{
               numeral: true,
-              numeralThousandsGroupStyle: 'thousand',
-              numeralPositiveOnly: true,
+              numeralThousandsGroupStyle: "thousand",
+              numeralPositiveOnly: true
             }}
             placeholder="0.00"
             value={state.hourlyRate}
