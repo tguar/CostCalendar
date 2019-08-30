@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./List.css";
+import { getCachedExpensesOrDefault } from "./LocalStorageCache.jsx";
+import { cacheExpenses } from "./LocalStorageCache";
 import { Rectangle } from "react-shapes";
 import { Store } from "../Store";
 
@@ -68,17 +70,6 @@ function List() {
     "#99E6E6",
     "#6666FF"
   ];
-
-  function getCachedExpensesOrDefault(arrayOfObjects) {
-    if (localStorage.getItem("cacheExpenses") === null) {
-      return arrayOfObjects;
-    }
-    return JSON.parse(localStorage.getItem("cacheExpenses"));
-  }
-
-  function cacheExpenses(arrayOfObjects) {
-    localStorage.setItem("cacheExpenses", JSON.stringify(arrayOfObjects));
-  }
 
   function handleKeyDownForExpenseName(e, i) {
     if (e.key === "Enter") {
