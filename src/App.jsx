@@ -5,9 +5,9 @@ import List from './Components/List';
 
 function App() {
   return (
-    <div className="container">
+    <div className="container-fluid">
       <h1 className="Header">Cost Calendar</h1>
-      <div className="row">
+      <div className="row flex-column-reverse flex-sm-row">
         <div className="col-sm-8">
           <h2 className="Calendar">Cost in Days of Work</h2>
           <Calendar />

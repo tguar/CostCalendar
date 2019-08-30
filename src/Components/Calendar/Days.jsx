@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Day from './Day';
+import { removeCommasFromString } from '../../helpers';
 import { Store } from '../../Store';
 
 const DaysWrapper = styled.div`
@@ -10,27 +11,91 @@ const DaysWrapper = styled.div`
 
 const daysOfTheMonth = [];
 
-for (let i = 1; i <= 31; i++) {
+const getCurrentMonthNumber = () => {
+  return new Date().getMonth();
+};
+
+const getCurrentYear = () => {
+  return new Date().getFullYear();
+};
+
+const getStartingDayNumber = () => {
+  return new Date(getCurrentYear(), getCurrentMonthNumber(), 1).getDay();
+};
+
+const daysInMonth = (year, month) => {
+  return new Date(year, month, 0).getDate();
+};
+
+const calculateDecimalPointToString = val => {
+  if (val < 10) {
+    return `.0${val}`;
+  }
+  return `.${val}`;
+};
+
+for (
+  let i = 1;
+  i <= daysInMonth(getCurrentMonthNumber(), getCurrentYear());
+  i++
+) {
   daysOfTheMonth.push({ number: i });
 }
 
+// Assumption is still that 40 hours a week is worked and 4 weeks of work per month
+const calculateIncome = (rate, incomeCalculationType) => {
+  let rateNumber = removeCommasFromString(rate);
+  switch (incomeCalculationType) {
+    // daily
+    case 1: {
+      rateNumber *= 20;
+      break;
+    }
+    // weekly
+    case 2: {
+      rateNumber *= 4;
+      break;
+    }
+    // bi-weekly
+    case 3: {
+      rateNumber *= 2;
+      break;
+    }
+    // semi-weekly
+    case 4: {
+      rateNumber *= 2;
+      break;
+    }
+    // monthly
+    case 5: {
+      break;
+    }
+    // hourly
+    case 0:
+    default: {
+      rateNumber = rateNumber * 4 * 40;
+      break;
+    }
+  }
+  return rateNumber;
+};
+
 const Days = () => {
   const { state } = React.useContext(Store);
-  const { hourlyRate, expenses } = state;
+  const { hourlyRate, expenses, incomeCalculationType } = state;
 
-  const workHours = 40 * 4;
-  const income =
-    parseFloat(hourlyRate.substring(2).replace(/,/g, '')) * workHours;
+  const income = calculateIncome(hourlyRate, incomeCalculationType);
 
   const colors = [];
   const fill = [];
 
   expenses.forEach(expense => {
-    const percent = (parseFloat(expense.expenseAmount) / income) * 100;
+    const percent =
+      (removeCommasFromString(expense.expenseAmount) / income) * 100;
     colors.push({
       color: expense.expenseColor,
       monthPercent: percent || 0,
-      dayPercent: percent * 20 || 0
+      dayPercent: percent * 20 || 0,
     });
   });
 
@@ -63,8 +128,8 @@ const Days = () => {
   index = 0;
   daysOfTheMonth.forEach(day => {
     if (
-      day.number % 7 === 0 ||
-      (day.number - 1) % 7 === 0 ||
+      (day.number + getStartingDayNumber()) % 7 === 0 ||
+      (day.number + getStartingDayNumber() - 1) % 7 === 0 ||
       index >= fill.length
     ) {
       day.fill = null;
@@ -73,12 +138,17 @@ const Days = () => {
     }
   });
 
-  console.log(fill);
-
   return (
     <DaysWrapper>
+      {Array.from({ length: getStartingDayNumber() }, (value, index) => (
+        <Day key={`x${index}`} />
+      ))}
       {daysOfTheMonth.map((day, index) => (
-        <Day key={`.0${index}`} dayNumber={day.number} fill={day.fill} />
+        <Day
+          key={calculateDecimalPointToString(index)}
+          dayNumber={day.number}
+          fill={day.fill}
+        />
       ))}
     </DaysWrapper>
   );

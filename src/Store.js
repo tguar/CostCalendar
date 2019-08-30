@@ -1,18 +1,33 @@
 import React from "react";
+import { getCachedItemOrDefault } from "./Components/LocalStorageCache.jsx";
+import { setCachedItem } from "./Components/LocalStorageCache.jsx";
 
 export const Store = React.createContext();
 
-const initialState = {
-  hourlyRate: "$ 20.00",
-  expenses: []
-};
+const initialState = getCachedItemOrDefault(
+  {
+    hourlyRate: "20",
+    expenses: [],
+    incomeCalculationType: 0
+  },
+  "Income"
+);
 
 function reducer(state, action) {
+  var newState;
   switch (action.type) {
     case "SET_HOURLY_RATE":
-      return { ...state, hourlyRate: action.payload };
+      newState = { ...state, hourlyRate: action.payload };
+      setCachedItem(newState, "Income");
+      return newState;
     case "SET_EXPENSES":
-      return { ...state, expenses: [...action.payload] };
+      newState = { ...state, expenses: [...action.payload] };
+      setCachedItem(newState, "Income");
+      return newState;
+    case "SET_INCOME_CALCULATION_TYPE":
+      newState = { ...state, incomeCalculationType: action.payload };
+      setCachedItem(newState, "Income");
+      return newState;
     default:
       return state;
   }
