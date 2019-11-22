@@ -1,23 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import './List.css';
+import styled from 'styled-components';
 import { Rectangle } from 'react-shapes';
+import Cleave from 'cleave.js/react';
+import { removeCommasFromString } from '../helpers';
 import { Store } from '../Store';
+import { getCachedItemOrDefault } from './LocalStorageCache.jsx';
+import { setCachedItem } from './LocalStorageCache';
+
+const CurrencyInput = styled(Cleave)`
+  text-align: right;
+`;
 
 function List() {
-  const [expenses, setExpenses] = useState([
-    {
-      expenseName: 'Rent',
-      expenseAmount: 20.99,
-      expenseColor: '#ff0800'
-    },
-    {
-      expenseName: 'Car',
-      expenseAmount: 10.11,
-      expenseColor: '#8db600'
-    }
-  ]);
+  const [expenses, setExpenses] = useState(
+    getCachedItemOrDefault(
+      [
+        {
+          expenseName: 'Rent',
+          expenseAmount: Number(900).toFixed(2),
+          expenseColor: '#ff0800',
+        },
+      ],
+      'Expenses'
+    )
+  );
 
-  const { state, dispatch } = React.useContext(Store);
+  const { dispatch } = React.useContext(Store);
 
   const COLOR_ARRAY = [
     '#FF6633',
@@ -69,8 +78,18 @@ function List() {
     '#4DB380',
     '#FF4D4D',
     '#99E6E6',
-    '#6666FF'
+    '#6666FF',
   ];
+
+  // reducer that returns the last expense based on each expense's index position in COLOR_ARRAY
+  const lastExpenseObjectBasedOnPositionInColorArray = expenses.reduce(
+    (prev, current) =>
+      COLOR_ARRAY.indexOf(prev.expenseColor) >
+      COLOR_ARRAY.indexOf(current.expenseColor)
+        ? prev
+        : current,
+    COLOR_ARRAY[0]
+  );
 
   function handleKeyDownForExpenseName(e, i) {
     if (e.key === 'Enter') {
@@ -85,7 +104,17 @@ function List() {
 
   function handleKeyDownForExpenseAmount(e, i) {
     if (e.key === 'Enter') {
+      let { value } = e.target;
+      const removedCommaValue = removeCommasFromString(value);
+      const newExpenses = [...expenses];
+      newExpenses[i].expenseAmount = Number(removedCommaValue).toFixed(2);
+      setExpenses(newExpenses);
+
       createExpenseAtIndex(e, i);
+    }
+    if (e.key === 'Backspace' && expenses[i].expenseAmount === 0) {
+      e.preventDefault();
+      return removeExpensesAtIndex(i);
     }
     if (e.key === 'Backspace' && expenses[i].expenseAmount === '') {
       e.preventDefault();
@@ -94,28 +123,46 @@ function List() {
   }
 
   function createExpenseAtIndex(e, i) {
+    const nextColor =
+      COLOR_ARRAY[
+        COLOR_ARRAY.indexOf(
+          lastExpenseObjectBasedOnPositionInColorArray.expenseColor
+        ) + 1
+      ];
+
+    if (nextColor === undefined) {
+      window.alert(
+        'You seem to have more expenses our site can handle. From now on your additional expenses will not be tracked.'
+      );
+    }
+
     const newExpenses = [...expenses];
     newExpenses.splice(i + 1, 0, {
       expenseName: '',
-      expenseAmount: 0.0,
-      expenseColor: COLOR_ARRAY[i]
+      expenseAmount: '',
+      expenseColor: nextColor,
     });
     setExpenses(newExpenses);
     setTimeout(() => {
       document.forms[0].elements[2 * i + 2].focus();
     }, 0);
+    setCachedItem(newExpenses, 'Expenses');
   }
 
   function updateExpenseNameAtIndex(e, i) {
     const newExpenses = [...expenses];
     newExpenses[i].expenseName = e.target.value;
     setExpenses(newExpenses);
+    setCachedItem(newExpenses, 'Expenses');
   }
 
   function updateExpenseAmountAtIndex(e, i) {
+    const { value } = e.target;
+
     const newExpenses = [...expenses];
-    newExpenses[i].expenseAmount = e.target.value;
+    newExpenses[i].expenseAmount = value;
     setExpenses(newExpenses);
+    setCachedItem(newExpenses, 'Expenses');
   }
 
   function removeExpensesAtIndex(i) {
@@ -126,51 +173,60 @@ function List() {
     setTimeout(() => {
       document.forms[0].elements[2 * i - 1].focus();
     }, 0);
+    removeCachedExpensesAtIndex(i);
   }
 
-  // eslint-disable-next-line
-    function toggleExpenseCompleteAtIndex(index) {
-    const temporaryExpenses = [...expenses];
-    temporaryExpenses[index].isCompleted = !temporaryExpenses[index]
-      .isCompleted;
-    setExpenses(temporaryExpenses);
+  function removeCachedExpensesAtIndex(i) {
+    var retarr = JSON.parse(localStorage.getItem('cacheExpenses'));
+    retarr.splice(i, 1);
+    setCachedItem(retarr);
   }
 
   useEffect(() => {
-    if (expenses.length !== state.expenses.length) {
-      dispatch({
-        type: 'SET_EXPENSES',
-        payload: expenses
-      });
-    }
-  });
+    dispatch({
+      type: 'SET_EXPENSES',
+      payload: expenses,
+    });
+  }, [dispatch, expenses]);
 
   return (
     <form className="expense-list">
       <ul>
-        {expenses.map((expense, i) => (
-          // console.log(expense),
-          <div key={i} id={i} className="expense">
+        {expenses.map((expense, index) => (
+          <div key={index} id={index} className="expense">
             <Rectangle
-              width={40}
-              height={20}
               fill={{ color: expense.expenseColor }}
+              height={20}
+              width={40}
             />
             <input
+              className="expense-input"
+              onChange={e => updateExpenseNameAtIndex(e, index)}
+              onKeyDown={e => handleKeyDownForExpenseName(e, index)}
+              placeholder="Expense"
               type="text"
-              placeholder="test"
               value={expense.expenseName}
-              onKeyDown={e => handleKeyDownForExpenseName(e, i)}
-              onChange={e => updateExpenseNameAtIndex(e, i)}
             />
-            <input
-              type="number"
+            {/* <input
+              className="currency-input"
+              min="0.00"
+              max="9999.99"
               step=".01"
-              min=".01"
-              max="10000"
               value={expense.expenseAmount}
-              onKeyDown={e => handleKeyDownForExpenseAmount(e, i)}
-              onChange={e => updateExpenseAmountAtIndex(e, i)}
+              onKeyDown={e => handleKeyDownForExpenseAmount(e, index)}
+              onChange={e => updateExpenseAmountAtIndex(e, index)}
+              type="number"
+            /> */}
+            <CurrencyInput
+              onChange={e => updateExpenseAmountAtIndex(e, index)}
+              onKeyDown={e => handleKeyDownForExpenseAmount(e, index)}
+              options={{
+                numeral: true,
+                numeralThousandsGroupStyle: 'thousand',
+                numeralPositiveOnly: true,
+              }}
+              placeholder="0.00"
+              value={expense.expenseAmount}
             />
           </div>
         ))}
