@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/CostCalendar/static/css/main.7544d863.chunk.css",
+    "main.js": "/CostCalendar/static/js/main.8d6fdb2b.chunk.js",
+    "main.js.map": "/CostCalendar/static/js/main.8d6fdb2b.chunk.js.map",
+    "runtime~main.js": "/CostCalendar/static/js/runtime~main.9ac8df7d.js",
+    "runtime~main.js.map": "/CostCalendar/static/js/runtime~main.9ac8df7d.js.map",
+    "static/css/2.0bf6fa00.chunk.css": "/CostCalendar/static/css/2.0bf6fa00.chunk.css",
+    "static/js/2.6a7aaea4.chunk.js": "/CostCalendar/static/js/2.6a7aaea4.chunk.js",
+    "static/js/2.6a7aaea4.chunk.js.map": "/CostCalendar/static/js/2.6a7aaea4.chunk.js.map",
+    "index.html": "/CostCalendar/index.html",
+    "precache-manifest.f189ef21309d2cbff2e0335d589f759e.js": "/CostCalendar/precache-manifest.f189ef21309d2cbff2e0335d589f759e.js",
+    "service-worker.js": "/CostCalendar/service-worker.js",
+    "static/css/2.0bf6fa00.chunk.css.map": "/CostCalendar/static/css/2.0bf6fa00.chunk.css.map",
+    "static/css/main.7544d863.chunk.css.map": "/CostCalendar/static/css/main.7544d863.chunk.css.map"
+  }
+}
