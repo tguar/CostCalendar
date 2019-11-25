@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/costcalendar/static/css/main.7544d863.chunk.css",
-    "main.js": "/costcalendar/static/js/main.099369c4.chunk.js",
-    "main.js.map": "/costcalendar/static/js/main.099369c4.chunk.js.map",
-    "runtime~main.js": "/costcalendar/static/js/runtime~main.a0dd6d8a.js",
-    "runtime~main.js.map": "/costcalendar/static/js/runtime~main.a0dd6d8a.js.map",
-    "static/css/2.0bf6fa00.chunk.css": "/costcalendar/static/css/2.0bf6fa00.chunk.css",
-    "static/js/2.26d323c4.chunk.js": "/costcalendar/static/js/2.26d323c4.chunk.js",
-    "static/js/2.26d323c4.chunk.js.map": "/costcalendar/static/js/2.26d323c4.chunk.js.map",
-    "index.html": "/costcalendar/index.html",
-    "precache-manifest.07d5d7d5c836aa27f5b267ade6bf0d75.js": "/costcalendar/precache-manifest.07d5d7d5c836aa27f5b267ade6bf0d75.js",
-    "service-worker.js": "/costcalendar/service-worker.js",
-    "static/css/2.0bf6fa00.chunk.css.map": "/costcalendar/static/css/2.0bf6fa00.chunk.css.map",
-    "static/css/main.7544d863.chunk.css.map": "/costcalendar/static/css/main.7544d863.chunk.css.map"
+    "main.css": "/CostCalendar/static/css/main.7544d863.chunk.css",
+    "main.js": "/CostCalendar/static/js/main.0bdec6e5.chunk.js",
+    "main.js.map": "/CostCalendar/static/js/main.0bdec6e5.chunk.js.map",
+    "runtime~main.js": "/CostCalendar/static/js/runtime~main.9ac8df7d.js",
+    "runtime~main.js.map": "/CostCalendar/static/js/runtime~main.9ac8df7d.js.map",
+    "static/css/2.0bf6fa00.chunk.css": "/CostCalendar/static/css/2.0bf6fa00.chunk.css",
+    "static/js/2.6a7aaea4.chunk.js": "/CostCalendar/static/js/2.6a7aaea4.chunk.js",
+    "static/js/2.6a7aaea4.chunk.js.map": "/CostCalendar/static/js/2.6a7aaea4.chunk.js.map",
+    "index.html": "/CostCalendar/index.html",
+    "precache-manifest.8d3e05c872fc8ca381c6c4ca0e1ced0e.js": "/CostCalendar/precache-manifest.8d3e05c872fc8ca381c6c4ca0e1ced0e.js",
+    "service-worker.js": "/CostCalendar/service-worker.js",
+    "static/css/2.0bf6fa00.chunk.css.map": "/CostCalendar/static/css/2.0bf6fa00.chunk.css.map",
+    "static/css/main.7544d863.chunk.css.map": "/CostCalendar/static/css/main.7544d863.chunk.css.map"
   }
 }
