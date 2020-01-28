@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Day from './Day';
 import { removeCommasFromString } from '../../helpers';
@@ -42,6 +42,11 @@ for (
   daysOfTheMonth.push({ number: i });
 }
 
+const disabledMap = {};
+for (let i in daysOfTheMonth) {
+  disabledMap[daysOfTheMonth[i].number] = false;
+}
+
 // Assumption is still that 40 hours a week is worked and 4 weeks of work per month
 const calculateIncome = (rate, incomeCalculationType) => {
   let rateNumber = removeCommasFromString(rate);
@@ -83,6 +88,7 @@ const calculateIncome = (rate, incomeCalculationType) => {
 const Days = () => {
   const { state } = React.useContext(Store);
   const { hourlyRate, expenses, incomeCalculationType } = state;
+  const [isDisabledMap, setIsDisabledMap] = useState({ ...disabledMap });
 
   const income = calculateIncome(hourlyRate, incomeCalculationType);
 
@@ -127,6 +133,10 @@ const Days = () => {
 
   index = 0;
   daysOfTheMonth.forEach(day => {
+    if (isDisabledMap[day.number]) {
+      day.fill = null;
+      return;
+    }
     if (
       (day.number + getStartingDayNumber()) % 7 === 0 ||
       (day.number + getStartingDayNumber() - 1) % 7 === 0 ||
@@ -138,6 +148,10 @@ const Days = () => {
     }
   });
 
+  const handleOnClick = day => {
+    setIsDisabledMap({ ...isDisabledMap, [day]: !isDisabledMap[day] });
+  };
+
   return (
     <DaysWrapper>
       {Array.from({ length: getStartingDayNumber() }, (value, index) => (
@@ -148,6 +162,8 @@ const Days = () => {
           key={calculateDecimalPointToString(index)}
           dayNumber={day.number}
           fill={day.fill}
+          isDisabled={isDisabledMap[day.number]}
+          onClick={() => handleOnClick(day.number)}
         />
       ))}
     </DaysWrapper>
