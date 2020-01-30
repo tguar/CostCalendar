@@ -9,6 +9,7 @@ const initialState = getCachedItemOrDefault(
     hourlyRate: '20',
     expenses: [],
     incomeCalculationType: 0,
+    weekendDisabled: true,
   },
   'Income'
 );
@@ -26,6 +27,10 @@ function reducer(state, action) {
       return newState;
     case 'SET_INCOME_CALCULATION_TYPE':
       newState = { ...state, incomeCalculationType: action.payload };
+      setCachedItem(newState, 'Income');
+      return newState;
+    case 'SET_DISABLE_WEEKEND':
+      newState = { ...state, weekendDisabled: action.payload };
       setCachedItem(newState, 'Income');
       return newState;
     default:

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Day from './Day';
 import { removeCommasFromString } from '../../helpers';
@@ -34,6 +34,16 @@ const calculateDecimalPointToString = val => {
   return `.${val}`;
 };
 
+const checkIfWeekend = i => {
+  if (
+    (parseInt(i) + getStartingDayNumber()) % 7 === 0 ||
+    (parseInt(i) + getStartingDayNumber() - 1) % 7 === 0
+  )
+    return true;
+  else {
+    return false;
+  }
+};
 for (
   let i = 1;
   i <= daysInMonth(getCurrentMonthNumber(), getCurrentYear());
@@ -133,13 +143,16 @@ const Days = () => {
 
   index = 0;
   daysOfTheMonth.forEach(day => {
-    if (isDisabledMap[day.number]) {
+    if (
+      isDisabledMap[day.number] ||
+      (state.weekendDisabled && checkIfWeekend(day.number))
+    ) {
       day.fill = null;
       return;
     }
     if (
-      (day.number + getStartingDayNumber()) % 7 === 0 ||
-      (day.number + getStartingDayNumber() - 1) % 7 === 0 ||
+      //   (day.number + getStartingDayNumber()) % 7 === 0 ||
+      //   (day.number + getStartingDayNumber() - 1) % 7 === 0 ||
       index >= fill.length
     ) {
       day.fill = null;
@@ -162,7 +175,10 @@ const Days = () => {
           key={calculateDecimalPointToString(index)}
           dayNumber={day.number}
           fill={day.fill}
-          isDisabled={isDisabledMap[day.number]}
+          isDisabled={
+            isDisabledMap[day.number] ||
+            (state.weekendDisabled && checkIfWeekend(day.number))
+          }
           onClick={() => handleOnClick(day.number)}
         />
       ))}
