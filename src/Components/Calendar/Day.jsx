@@ -11,8 +11,11 @@ const DayWrapper = styled.div`
 `;
 
 const Number = styled.div`
+  background-color: ${({ isDisabled }) =>
+    isDisabled ? '#dddddd' : 'transparent'};
   border: 1px solid #cccccc;
   border-radius: 5px;
+  cursor: ${({ dayNumber }) => (dayNumber ? 'pointer' : 'default')};
   display: flex;
   flex-direction: column-reverse;
   height: 90%;
@@ -37,11 +40,18 @@ const Progress = styled.div`
 `;
 
 const Day = props => {
-  const { dayNumber, fill } = props;
+  const { dayNumber, fill, isDisabled, ...restProps } = props;
   const keys = fill ? Object.keys(fill) : [];
+
   return (
     <DayWrapper>
-      <Number dayNumber={dayNumber}>
+      <Number
+        dayNumber={dayNumber}
+        isDisabled={isDisabled}
+        role="button"
+        tabIndex={dayNumber ? '0' : ''}
+        {...restProps}
+      >
         {keys.map((key, index) => (
           <Progress key={`.0${index}`} color={key} height={fill[key]} />
         ))}
