@@ -171,15 +171,17 @@ function List() {
       expenses.slice(0, i).concat(expenses.slice(i + 1, expenses.length))
     );
     setTimeout(() => {
-      document.forms[0].elements[2 * i - 1].focus();
+      if (document.forms[0].elements[2 * i - 1] !== undefined) {
+        document.forms[0].elements[2 * i - 1].focus();
+      }
     }, 0);
     removeCachedExpensesAtIndex(i);
   }
 
   function removeCachedExpensesAtIndex(i) {
-    var retarr = JSON.parse(localStorage.getItem('cacheExpenses'));
+    var retarr = JSON.parse(localStorage.Expenses);
     retarr.splice(i, 1);
-    setCachedItem(retarr);
+    setCachedItem(retarr, 'Expenses');
   }
 
   useEffect(() => {

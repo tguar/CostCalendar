@@ -51,6 +51,14 @@ const Month = () => {
       payload: e,
     });
 
+  const weekendsOnChange = e => {
+    const { checked } = e.target;
+    dispatch({
+      type: 'SET_DISABLE_WEEKEND',
+      payload: checked,
+    });
+  };
+
   return (
     <Fragment>
       <Rate>
@@ -72,6 +80,18 @@ const Month = () => {
           </div>
         </div>
       </Rate>
+      <div className="form-check">
+        <input
+          type="checkbox"
+          className="form-check-input"
+          id="disableWeekends"
+          onChange={weekendsOnChange}
+          checked={state.weekendDisabled}
+        />
+        <label className="form-check-label" htmlFor="disableWeekends">
+          Disable Weekends
+        </label>
+      </div>
       <Week>
         <WeekDay>
           <abbr title="Sunday" aria-label="Sunday">
